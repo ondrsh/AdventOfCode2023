@@ -4,6 +4,7 @@ import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.sqrt
 
+// 8 µs
 fun main() {
     val lines = File("input/6.txt").readLines()
     val (times, records) = lines.map { it.substringAfter(":").tokenizeLongs() }
