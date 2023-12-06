@@ -1,15 +1,15 @@
 import java.io.File
 
-// 0.1ms
+// 0.1 ms
 fun main() {
     val blocks = File("input/5.txt").readText().split("\n\n")
     val seeds = blocks.first().substringAfter(": ").split(" ").map { it.toLong() }
     val seedRanges = seeds.chunked(2).map { (start, length) -> start..start + length }
     val rangeMaps = blocks.filter { it.contains("map") }.map { mapBlock ->
-        mapBlock.split("\n").drop(1).map { line ->
+        mapBlock.split("\n").drop(1).associate { line ->
             val (dst, src, length) = line.split(" ").map { it.toLong() }
             (src until src + length) to (dst until dst + length)
-        }.toMap()
+        }
     }
 
     fun mapRange(input: LongRange,
@@ -25,7 +25,7 @@ fun main() {
             val theirMin = rangeMap.minOf { it.key.first }
             val theirMax = rangeMap.maxOf { it.key.last }
             if (input.first < theirMin) add(input.first until theirMin)
-            if (input.last > theirMax) add(theirMax + 1..input.last)
+            if (theirMax < input.last) add(theirMax + 1..input.last)
         }
     }
 
