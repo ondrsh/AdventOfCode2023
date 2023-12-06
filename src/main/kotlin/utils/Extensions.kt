@@ -1,5 +1,6 @@
 package utils
 
+import java.util.*
 import kotlin.math.absoluteValue
 
 val Long.abs
@@ -18,4 +19,13 @@ fun <T> List<CharArray>.map(block: (coords: Coords, c: Char) -> T) = flatMapInde
     line.mapIndexed { col, c ->
         block(Coords(row, col), c)
     }
+}
+
+fun String.tokenizeLongs(): MutableList<Long> {
+    val arr = mutableListOf<Long>()
+    val tokenizer = StringTokenizer(this)
+    while (tokenizer.hasMoreTokens()) {
+        arr.add(tokenizer.nextToken()!!.toLong())
+    }
+    return arr
 }
