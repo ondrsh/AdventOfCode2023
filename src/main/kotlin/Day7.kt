@@ -25,7 +25,7 @@ fun main() {
         }
     }
 
-    data class ImprovedHand(val original: String, val improved: String)
+    data class ImprovedHand(val improved: String, val original: String)
 
     fun Comparator<ImprovedHand>.compareCards(withJoker: Boolean) = this
         .thenComparingInt { it.original[0].cardStrength(withJoker) }
@@ -37,15 +37,13 @@ fun main() {
     val originalComparator = comparingInt<ImprovedHand> { it.original.type() }.compareCards(withJoker = false)
     val jokerComparator = comparingInt<ImprovedHand> { it.improved.type() }.compareCards(withJoker = true)
 
-    fun String.improve() = toList().distinct()
-        .map { ImprovedHand(this, this.replace('J', it)) }
+    fun String.improve() = toCharArray().distinct()
+        .map { ImprovedHand(this.replace('J', it), original = this) }
         .maxWith(jokerComparator)
-        .improved
 
     val improvedToBids = lines.associate {
         val (hand, bid) = it.split(" ").let { it.first() to it.last().toLong() }
-        val improved = ImprovedHand(hand, hand.improve())
-        improved to bid
+        hand.improve() to bid
     }
 
     fun sumWinnings(comp: Comparator<ImprovedHand>) = improvedToBids
