@@ -13,20 +13,12 @@ fun main() {
 
     fun String.solveForNode(): Long {
         var cur = this
-        var multi = 0L
         var i = 0
-        while (true) {
-            val inst = instructions[i++]
-            if (i == instructions.length) {
-                i = 0
-                multi += 1L
-            }
-            val next = network[cur]!![inst]!!
-            if (next.endsWith('Z')) {
-                return multi * instructions.length + i
-            }
-            cur = next
+        while (cur.endsWith('Z') == false) {
+            val inst = instructions[i++ % instructions.length]
+            cur = network[cur]!![inst]!!
         }
+        return i.toLong()
     }
 
     val ans1 = network.keys.find { it == "AAA" }!!.solveForNode()
