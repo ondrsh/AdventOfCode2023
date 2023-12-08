@@ -2,9 +2,9 @@ package utils
 
 import kotlin.system.measureNanoTime
 
-fun <T> bench(runs: Int = 10_000,
-              warmup: Boolean = true,
-              block: () -> T): Pair<T, Double> {
+suspend fun <T> bench(runs: Int = 10_000,
+                      warmup: Boolean = true,
+                      block: suspend () -> T): Pair<T, Double> {
     var res = block()
     if (warmup) {
         repeat(runs) {
