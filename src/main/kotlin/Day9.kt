@@ -7,8 +7,8 @@ fun main() {
         last() + windowed(2) { it.last() - it.first() }.extrapolate()
     }
 
-    val ans1 = lines.sumOf { it.reversed().extrapolate() }
-    val ans2 = lines.sumOf { it.extrapolate() }
+    val ans1 = lines.sumOf { it.extrapolate() }
+    val ans2 = lines.sumOf { it.reversed().extrapolate() }
     println(ans1)
     println(ans2)
 }
